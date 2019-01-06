@@ -1,0 +1,202 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ProjMagrModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Project_Table">
+          <Key>
+            <PropertyRef Name="Project_id" />
+          </Key>
+          <Property Name="Project_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Project_name" Type="varchar" MaxLength="50" />
+          <Property Name="start_date" Type="datetime" />
+          <Property Name="end_date" Type="datetime" />
+          <Property Name="priority" Type="int" />
+          <Property Name="manager_name" Type="varchar" MaxLength="50" />
+          <Property Name="deleted" Type="bit" />
+        </EntityType>
+        <EntityType Name="Task_Table">
+          <Key>
+            <PropertyRef Name="Task_id" />
+          </Key>
+          <Property Name="Task_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Project_Name" Type="varchar" MaxLength="50" />
+          <Property Name="Task_name" Type="varchar" MaxLength="50" />
+          <Property Name="Is_parent_task" Type="bit" />
+          <Property Name="Priority" Type="int" />
+          <Property Name="parent_task_name" Type="varchar" MaxLength="50" />
+          <Property Name="start_date" Type="datetime" />
+          <Property Name="end_date" Type="datetime" />
+          <Property Name="user_name" Type="varchar" MaxLength="50" />
+          <Property Name="deleted" Type="bit" />
+          <Property Name="status" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserTable">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="first_name" Type="varchar" MaxLength="50" />
+          <Property Name="last_name" Type="varchar" MaxLength="50" />
+          <Property Name="emp_id" Type="varchar" MaxLength="50" />
+          <Property Name="deleted" Type="bit" />
+        </EntityType>
+        <Association Name="FK_Task_Table_Task_Table">
+          <End Role="Task_Table" Type="Self.Task_Table" Multiplicity="1" />
+          <End Role="Task_Table1" Type="Self.Task_Table" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Task_Table">
+              <PropertyRef Name="Task_id" />
+            </Principal>
+            <Dependent Role="Task_Table1">
+              <PropertyRef Name="Task_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjMagrModelStoreContainer">
+          <EntitySet Name="Project_Table" EntityType="Self.Project_Table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Task_Table" EntityType="Self.Task_Table" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserTable" EntityType="Self.UserTable" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Task_Table_Task_Table" Association="Self.FK_Task_Table_Task_Table">
+            <End Role="Task_Table" EntitySet="Task_Table" />
+            <End Role="Task_Table1" EntitySet="Task_Table" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ProjMagrModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Project_Table">
+          <Key>
+            <PropertyRef Name="Project_id" />
+          </Key>
+          <Property Name="Project_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Project_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="start_date" Type="DateTime" Precision="3" />
+          <Property Name="end_date" Type="DateTime" Precision="3" />
+          <Property Name="priority" Type="Int32" />
+          <Property Name="deleted" Type="Boolean" />
+          <Property Name="manager_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Task_Table">
+          <Key>
+            <PropertyRef Name="Task_id" />
+          </Key>
+          <Property Name="Task_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Project_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Task_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Is_parent_task" Type="Boolean" />
+          <Property Name="Priority" Type="Int32" />
+          <Property Name="parent_task_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="start_date" Type="DateTime" Precision="3" />
+          <Property Name="end_date" Type="DateTime" Precision="3" />
+          <Property Name="user_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Task_Table1" Relationship="Self.FK_Task_Table_Task_Table" FromRole="Task_Table" ToRole="Task_Table1" />
+          <NavigationProperty Name="Task_Table2" Relationship="Self.FK_Task_Table_Task_Table" FromRole="Task_Table1" ToRole="Task_Table" />
+          <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="deleted" Type="Boolean" />
+        </EntityType>
+        <EntityType Name="UserTable">
+          <Key>
+            <PropertyRef Name="user_id" />
+          </Key>
+          <Property Name="user_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="first_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="last_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="emp_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="deleted" Type="Boolean" />
+        </EntityType>
+        <Association Name="FK_Task_Table_Task_Table">
+          <End Role="Task_Table" Type="Self.Task_Table" Multiplicity="1" />
+          <End Role="Task_Table1" Type="Self.Task_Table" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Task_Table">
+              <PropertyRef Name="Task_id" />
+            </Principal>
+            <Dependent Role="Task_Table1">
+              <PropertyRef Name="Task_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ProjMagrEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Project_Table" EntityType="Self.Project_Table" />
+          <EntitySet Name="Task_Table" EntityType="Self.Task_Table" />
+          <EntitySet Name="UserTables" EntityType="Self.UserTable" />
+          <AssociationSet Name="FK_Task_Table_Task_Table" Association="Self.FK_Task_Table_Task_Table">
+            <End Role="Task_Table" EntitySet="Task_Table" />
+            <End Role="Task_Table1" EntitySet="Task_Table" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ProjMagrModelStoreContainer" CdmEntityContainer="ProjMagrEntities">
+          <EntitySetMapping Name="Project_Table">
+            <EntityTypeMapping TypeName="ProjMagrModel.Project_Table">
+              <MappingFragment StoreEntitySet="Project_Table">
+                <ScalarProperty Name="manager_name" ColumnName="manager_name" />
+                <ScalarProperty Name="Project_id" ColumnName="Project_id" />
+                <ScalarProperty Name="Project_name" ColumnName="Project_name" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="priority" ColumnName="priority" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Task_Table">
+            <EntityTypeMapping TypeName="ProjMagrModel.Task_Table">
+              <MappingFragment StoreEntitySet="Task_Table">
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="Task_id" ColumnName="Task_id" />
+                <ScalarProperty Name="Project_Name" ColumnName="Project_Name" />
+                <ScalarProperty Name="Task_name" ColumnName="Task_name" />
+                <ScalarProperty Name="Is_parent_task" ColumnName="Is_parent_task" />
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="parent_task_name" ColumnName="parent_task_name" />
+                <ScalarProperty Name="start_date" ColumnName="start_date" />
+                <ScalarProperty Name="end_date" ColumnName="end_date" />
+                <ScalarProperty Name="user_name" ColumnName="user_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserTables">
+            <EntityTypeMapping TypeName="ProjMagrModel.UserTable">
+              <MappingFragment StoreEntitySet="UserTable">
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="first_name" ColumnName="first_name" />
+                <ScalarProperty Name="last_name" ColumnName="last_name" />
+                <ScalarProperty Name="emp_id" ColumnName="emp_id" />
+                <ScalarProperty Name="deleted" ColumnName="deleted" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
