@@ -1,0 +1,86 @@
+<div class="container">
+  <h4>Add User</h4>
+  <form class="form-horizontal" action="">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="fname">First Name:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="firstName" placeholder="Enter First Name" name="firstName"  required [(ngModel)]="item.first_name">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="lname">Last Name:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="lname" placeholder="Enter Last Name" required [(ngModel)]="item.last_name" [ngModelOptions]="{standalone: true}" name="lname">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="empid">Employee ID:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="empid" placeholder="Enter Employee Id" required [(ngModel)]="item.emp_id" [ngModelOptions]="{standalone: true}" name="empid">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="button" class="btn btn-primary" id="adduser" name="adduser" (click)="Insert(item)">{{ title }}</button> &nbsp;
+        <button type="reset" class="btn btn-primary" (click)="Reset()">Reset</button>  
+        <input type="text" id="userid_tb" name ="userid_tb" class="sr-only" [(ngModel)]="item.user_id">
+      </div>
+    </div>
+    <hr>
+    <div class="form-group row">
+      <div class="col-sm-5">
+        <input type="text" class="form-control" placeholder="search" [(ngModel)]="SearchUserName" [ngModelOptions]="{standalone: true}" id="searchtxt">
+      </div>
+      <div class="col-sm-2 text-left">
+          <button type="button" class="btn btn-primary sr-only" id="fname_search">Search</button>
+        </div>
+      <div class="col-sm-1">
+        <label> Sort By: </label>
+      </div>
+      <div class="col-sm-1">
+       <button type="button" class="btn btn-primary" (click)="SortFirstName()"  id="fname_sort_btn">First Name</button>
+      </div>
+      <div class="col-sm-1">
+        <button type="button" class="btn btn-primary" (click)="SortLastName()" id="lname_sort_btn">Last Name</button>
+      </div>
+      <div class="col-sm-1">
+        <button type="button" class="btn btn-primary"  (click)="SortEmployeeId()" id="empid_sort_btn">Emp Id</button>
+      </div>
+    </div>    
+    <div>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Employee Id</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of _UserGrid">
+            <td><label> {{ user.first_name }} </label></td>
+            <td><label> {{ user.last_name }} </label></td>
+            <td><label> {{ user.emp_id }} </label></td>
+            <td>
+              <p data-placement="top" data-toggle="tooltip" title="Edit">
+                <button class="btn btn-primary btn-xs" data-title="Edit"  (click)="Update(user)" data-toggle="modal" data-target="#edit">
+                  <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+              </p>
+            </td>
+            <td>
+              <p data-placement="top" data-toggle="tooltip" title="Delete">
+                <button class="btn btn-danger btn-xs" data-title="Delete" (click)="Delete(user.user_id)" data-toggle="modal" data-target="#delete">
+                  <span class="glyphicon glyphicon-trash"></span>
+                </button>
+                <label class="sr-only">{{ user.user_id }}</label>
+              </p>
+            </td>
+          </tr>       
+        </tbody>
+      </table>
+    </div>
+  </form>
+</div>

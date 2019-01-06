@@ -1,0 +1,68 @@
+<div class="container">
+  <h4>View Task</h4>
+  <form class="form-horizontal" action="">
+    <div class="form-group row">
+      <div class="col-sm-5">
+        <input type="text" class="form-control" placeholder="Search Project" [(ngModel)]="SearchProjectName" id="searchtxt" name="searchtxt">
+      </div>
+      <div class="col-sm-1 text-left">
+        <button type="button" class="btn btn-primary sr-only" id="pro_search">Search</button>
+      </div>
+      <div class="col-sm-1">
+        <label> Sort By: </label>
+      </div>
+      <div class="col-sm-1">
+        <button type="button" class="btn btn-primary" id="sdate_sort_btn" (click)="SortStartDate()">Start Date</button>
+      </div>
+      <div class="col-sm-1">
+        <button type="button" class="btn btn-primary" id="edate_sort_btn" (click)="SortEndDate()">End Date</button>
+      </div>
+      <div class="col-sm-1">
+        <button type="button" class="btn btn-primary" id="Pri_sort_btn" (click)="SortPriority()">Priority</button>
+      </div>
+      <div class="col-sm-1">
+          <button type="button" class="btn btn-primary" id="com_sort_btn" (click)="SortCompleted()">Completed</button>
+        </div>
+    </div>
+    <hr>
+    <div>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Task</th>
+            <th scope="col">Parent</th>
+            <th scope="col">Priority</th>
+            <th scope="col">Start</th>
+            <th scope="col">End</th>
+            <th scope="col">Edit</th>
+            <th scope="col">Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let task of _TaskGrid">
+            <td>{{ task.Task_name }}</td>
+            <td>{{ task.parent_task_name }}</td>
+            <td>{{ task.Priority }}</td>
+            <td>{{ task.start_date | date : 'dd-MM-yyyy' }}</td>
+            <td>{{ task.end_date | date : 'dd-MM-yyyy' }}</td>
+            <td>
+              <p data-placement="top" data-toggle="tooltip" title="Edit">
+                <button class="btn btn-primary btn-xs" data-title="Edit" (click)=Update(task) data-toggle="modal" data-target="#edit">
+                  <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+              </p>
+            </td>
+            <td>
+              <p data-placement="top" data-toggle="tooltip" title="Delete">
+                <button class="btn btn-danger btn-xs" data-title="Delete" (click)=Delete(task.Task_id) data-toggle="modal" data-target="#delete">
+                  <span class="glyphicon glyphicon-trash"></span>
+                </button>
+                <label class="sr-only">{{ task.Task_id }}</label>
+              </p>
+            </td>
+          </tr> 
+        </tbody>
+      </table>
+    </div>
+  </form>
+</div>

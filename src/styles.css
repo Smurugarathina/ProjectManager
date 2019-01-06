@@ -1,0 +1,73 @@
+/* You can add global styles to this file, and also import other style files */
+h3{
+font-weight: bold;
+font-size:25px;
+padding-left: 30px;
+}
+/*.nav >li >a{
+    color: #000000;
+    font-size: 15px;
+}
+.nav >li >a:focus,.nav >li >a:hover{
+    color: #0000FF;    
+    background-color: transparent !important;
+}*/
+.form-control
+{
+    width: 460px;
+}
+.tb-width
+{
+width :360px !important;
+}
+.tb-width2
+{
+width :170px !important;
+}
+
+.tb-width3
+{
+width :100px !important;
+}
+.lblAlign{
+width : 14% !important;
+}
+.lblAlign2{
+    width : 11% !important;
+}
+.noBold
+{
+    font-weight: 100 !important;
+}
+.padding-btm5{
+    padding-bottom: 5px;
+}
+
+
+.rangeValue {
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4285;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: default;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #4cae4c;
+}
+
+
+

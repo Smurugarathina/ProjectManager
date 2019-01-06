@@ -1,0 +1,192 @@
+<div class="container">
+  <h4>Update Task</h4>
+  <form class="form-horizontal" action="">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="pname">Project:</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control tb-width" id="pname" required [(ngModel)]="item.Project_Name" name="pname">
+      </div>
+      <div class="col-sm-5">
+        <button type="button" class="btn btn-primary" id="search_project" data-toggle="modal" data-target="#projectModal" (click)="GetAllProjects()">Search</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="task">Task:</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="task" required [(ngModel)]="item.Task_name" name="task">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="task">&nbsp;</label>
+      <div class="col-sm-10">
+        <label>
+          <input type="checkbox" id="ptask_cb" name="ptask_cb" [(ngModel)]="item.Is_parent_task"> Parent Task
+        </label>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-2 text-right">
+        <label class="control-label" for="priority">Priority:</label>
+      </div>
+      <div class="col-sm-4">
+        <input type="range" min="1" max="30" class="tb-width" value="0" [(ngModel)]="item.Priority"  onchange="pvalue.value=value" id="priority" name="priority">
+      </div>
+      <div class="col-sm-2">
+        <label id="pvalue" name="pvalue" onloadstart="0" class="rangeValue" >10</label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="ptask">Parent Task:</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control tb-width" id="ptask" [(ngModel)]="item.parent_task_name" name="ptask">
+      </div>
+      <div class="col-sm-5">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#taskModal" id="search_ptask" (click)="GetParentTaskList()">Search</button>
+      </div>
+    </div>
+    <div class="form-group row">
+      <div class="col-sm-2 text-right">
+        <label class="control-label" for="sdate">Start Date:</label>
+      </div>
+      <div class="col-sm-2">
+        <input type="text" class="form-control tb-width2" id="sdate" required [(ngModel)]="item.start_date" name="sdate">
+      </div>
+      <div class="col-sm-1 text-right">
+        <label class="control-label" for="edate">End Date:</label>
+      </div>
+      <div class="col-sm-2">
+        <input type="text" class="form-control tb-width2" id="edate" required [(ngModel)]="item.end_date" name="edate">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="user">User:</label>
+      <div class="col-sm-4">
+        <input type="text" class="form-control tb-width" id="user" name="user" required [(ngModel)]="item.user_name">
+      </div>
+      <div class="col-sm-5">
+        <button type="button" class="btn btn-primary" id="search_user" data-toggle="modal" data-target="#exampleModal" (click)="GetAllUsers()">Search</button>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-primary" id="addtask_btn" name="addtask_btn" (click)="Update()">{{ title }}</button> &nbsp;
+        <button type="reset" class="btn btn-primary" (click)=cancel() id="reset_btn">Reset</button>
+      </div>
+    </div>
+
+
+    <!-- User Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Search User</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div style="padding-bottom:10px;">
+              <input type="text" id="userInput" name="txtSearchName" [(ngModel)]="SearchUserName" class="form-control tb-width" placeholder="Search..">
+            </div>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>UserName</th>
+                  <th>Select</th>
+                </tr>
+              </thead>
+              <tbody id="userTable">
+                <tr *ngFor="let user of _users">
+                  <td>{{ user.first_name }}</td>
+                  <td>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)=GetNames(user)>Select</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parent Task Modal -->
+    <div class="modal fade" id="taskModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Search Parent Task</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div style="padding-bottom:10px;">
+              <input type="text" id="taskInputsearch" name="taskInputsearch" class="form-control tb-width" placeholder="Search..">
+            </div>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Task Name</th>
+                  <th>Select</th>
+                </tr>
+              </thead>
+              <tbody id="taskTable">
+                <tr *ngFor="let task of _tasks">
+                  <td>{{ task.Task_name }}</td>
+                  <td>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)=GetTasks(task)>Select</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Project Modal -->
+    <div class="modal fade" id="projectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Search Project</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div style="padding-bottom:10px;">
+              <input type="text" id="projectInput" name="txtSearchName" class="form-control tb-width" placeholder="Search..">
+            </div>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Project Name</th>
+                  <th>Select</th>
+                </tr>
+              </thead>
+              <tbody id="projectTable">
+                <tr *ngFor="let project of _projects">
+                  <td>{{ project.Project_name }}</td>
+                  <td>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" (click)=GetProjects(project)>Select</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
